@@ -1,0 +1,48 @@
+{	
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 5
+            },
+            "errorLimit": {
+                "record": 0,
+                "percentage": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "mysqlreader",
+                    "parameter": {
+                        "username": "root",
+                        "password": "SinosoftIIG-2022",
+                        "connection": [ { 
+						"querySql": ["select bjcrzjhm,cysj,create_time,2 as data_source from nucleic_sample_${ymd_str} where LENGTH(bjcrzjhm) < 30 and create_time > '${start_time}' and create_time <= '${end_time}'"],
+						"jdbcUrl": [ "jdbc:mysql://188.2.44.51:3306/hbpc_nucleic" ] } ],
+					}
+                },
+                "writer": {
+                    "name": "doriswriter",
+                    "parameter": {
+                        "feLoadUrl":["188.2.44.102:8030"],
+                        "loadUrl": ["188.2.44.103:8040","188.2.44.104:8040","188.2.44.105:8040"],
+                        "jdbcUrl": "jdbc:mysql://188.2.44.102:3306/",
+                        "database": "direct",
+                        "table": "nucleic_data",
+						"column": ["identity","cysj","create_time","data_source"],
+                        "username": "root",
+                        "password": "SinosoftIIG-2022",
+                        "postSql": [],
+                        "preSql": [],
+                        "loadProps": {
+							"format":"json",
+							"strip_outer_array": true
+                        },
+						"maxBatchRows" : 100000,
+                        "maxBatchByteSize" : 1048576000
+                    }
+                }
+            }
+        ]
+    }
+}
