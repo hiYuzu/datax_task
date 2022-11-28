@@ -52,7 +52,7 @@ public class DataxTask {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
             String ymdStr = simpleDateFormat.format(DateUtil.offsetDay(oldDate, -offset));
 
-            String baseShell = "python datax.py --jvm=\"-Xms3G -Xmx6G\" people_ours_auto_new.json";
+            String baseShell = "python datax.py --jvm=\"-Xms16G -Xmx64G\" people_ours_auto_new.json";
             String logPath = "/root/datax/execute_log/";
             String paramShell = String.format(" -p \"-Dymd_str='%s' -Dstart_time='%s' -Dend_time='%s'\" >>%s 2>&1 &", ymdStr, oldString, currentString, logPath + file.getName());
             String[] cmd = new String[]{"/bin/sh", "-c", baseShell + paramShell};
